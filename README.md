@@ -4,7 +4,13 @@
 
 2. Build and Push the nginx, squid and icap server docker images to a docker registry by following steps given in https://github.com/k8-proxy/s-k8-proxy-rebuild/tree/master/stable-src#apps-deployment. At the end of this step, you should have 3 docker images with repository URLs and image tags
 
-3. From `stable-src` directory of [k8-proxy/s-k8-proxy-rebuild](https://github.com/k8-proxy/s-k8-proxy-rebuild) repository run below commands to deploy the helm chart for proxy solution of glasswallsolution.com website. Update below command with docker repository url and image tag before running the command.
+3. Clone https://github.com/k8-proxy/s-k8-proxy-rebuild.git repository
+
+```
+git clone https://github.com/k8-proxy/s-k8-proxy-rebuild.git
+```
+
+4. From `stable-src` directory of [k8-proxy/s-k8-proxy-rebuild](https://github.com/k8-proxy/s-k8-proxy-rebuild) repository run below commands to deploy the helm chart for proxy solution of glasswallsolution.com website. Update below command with docker repository url and image tag before running the command.
 
 ```
 helm upgrade --install \
@@ -24,7 +30,7 @@ helm upgrade --install \
 glasswallsolutions chart/
 ```
 
-4. Validation:
+5. Validation:
 
 Once all the pods are running, forward the traffic from local machine to nginx service.
 
