@@ -12,6 +12,8 @@ git clone https://github.com/k8-proxy/s-k8-proxy-rebuild.git
 
 4. From `stable-src` directory of [k8-proxy/s-k8-proxy-rebuild](https://github.com/k8-proxy/s-k8-proxy-rebuild) repository run below commands to deploy the helm chart for proxy solution of glasswallsolution.com website. Update below command with docker repository url and image tag before running the command.
 
+Make sure the variable `KUBECONFIG` is pointing to the path of `kubeconfig` file from the current terminal.
+
 ```
 helm upgrade --install \
 --set image.nginx.repository=<docker registry>/reverse-proxy-nginx \
