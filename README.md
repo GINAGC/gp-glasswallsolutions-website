@@ -34,9 +34,11 @@ glasswallsolutions chart/
 
 5. Validation:
 
-Once all the pods are running, forward the traffic from local machine to nginx service.
+Once all the pods are running, there are 2 options to connect to the proxied website.
 
-If the below command gives permission error to bind the port 443, please run the command with `sudo`
+1. Forward the traffic from local machine to nginx service.
+
+If the below command gives permission error to bind the port 443, please run the command with `root` user.
 
 ```
 kubectl port-forward svc/glasswallsolutions-reverse-proxy-nginx 443:443
@@ -47,6 +49,16 @@ You have to assign all proxied domains to the localhost address by adding them t
 
 ```
 127.0.0.1 glasswallsolutions.com.glasswall-icap.com www.glasswallsolutions.com.glasswall-icap.com
+```
+
+2. Connect using nginx ingress.
+
+You have to assign all proxied domains to the IP address of the machine where helm chart is deployed by adding them to hosts file ( `C:\Windows\System32\drivers\etc\hosts` on Windows , `/etc/hosts` on Linux )
+  
+  For example: 
+
+```
+54.78.209.23 glasswallsolutions.com.glasswall-icap.com www.glasswallsolutions.com.glasswall-icap.com
 ```
 
 You can test the stack functionality by downloading [a rich PDF file](https://glasswallsolutions.com.glasswall-icap.com/wp-content/uploads/2020/01/Glasswall-d-FIRST-Technology.pdf) through the proxy and testing it against [file-drop.co.uk](https://file-drop.co.uk)
