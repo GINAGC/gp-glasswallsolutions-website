@@ -4,7 +4,15 @@
 
 2. Build and Push the nginx, squid and icap server docker images to a docker registry by following steps given in https://github.com/k8-proxy/s-k8-proxy-rebuild/tree/master/stable-src#apps-deployment. At the end of this step, you should have 3 docker images with repository URLs and image tags
 
-3. From `stable-src` directory of [k8-proxy/s-k8-proxy-rebuild](https://github.com/k8-proxy/s-k8-proxy-rebuild) repository run below commands to deploy the helm chart for proxy solution of glasswallsolution.com website.
+3. Clone https://github.com/k8-proxy/s-k8-proxy-rebuild.git repository
+
+```
+git clone https://github.com/k8-proxy/s-k8-proxy-rebuild.git
+```
+
+4. From `stable-src` directory of [k8-proxy/s-k8-proxy-rebuild](https://github.com/k8-proxy/s-k8-proxy-rebuild) repository run below commands to deploy the helm chart for proxy solution of glasswallsolution.com website. Update below command with docker repository url and image tag before running the command.
+
+Make sure the variable `KUBECONFIG` is pointing to the path of `kubeconfig` file from the current terminal.
 
 ```
 helm upgrade --install \
@@ -24,11 +32,13 @@ helm upgrade --install \
 glasswallsolutions chart/
 ```
 
-4. Validation:
+5. Validation:
 
-Once all the pods are running, forward the traffic from local machine to nginx service.
+Once all the pods are running, there are 2 options to connect to the proxied website.
 
-If the below command gives permission error to bind the port 443, please run the command with `sudo`
+1. Forward the traffic from local machine to nginx service.
+
+If the below command gives permission error to bind the port 443, please run the command with `root` user.
 
 ```
 kubectl port-forward svc/glasswallsolutions-reverse-proxy-nginx 443:443
@@ -39,6 +49,16 @@ You have to assign all proxied domains to the localhost address by adding them t
 
 ```
 127.0.0.1 glasswallsolutions.com.glasswall-icap.com www.glasswallsolutions.com.glasswall-icap.com
+```
+
+2. Connect using nginx ingress.
+
+You have to assign all proxied domains to the IP address of the machine where helm chart is deployed by adding them to hosts file ( `C:\Windows\System32\drivers\etc\hosts` on Windows , `/etc/hosts` on Linux )
+  
+  For example: 
+
+```
+54.78.209.23 glasswallsolutions.com.glasswall-icap.com www.glasswallsolutions.com.glasswall-icap.com
 ```
 
 You can test the stack functionality by downloading [a rich PDF file](https://glasswallsolutions.com.glasswall-icap.com/wp-content/uploads/2020/01/Glasswall-d-FIRST-Technology.pdf) through the proxy and testing it against [file-drop.co.uk](https://file-drop.co.uk)
